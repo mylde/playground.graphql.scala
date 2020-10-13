@@ -22,7 +22,6 @@ object ErrorFormatter {
     case e =>
       throw e
   }
-
   def format(message: String): Json =
     Json.obj("errors" -> Json.arr(Json.obj("message" -> Json.fromString(message))))
 }

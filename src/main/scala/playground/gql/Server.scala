@@ -4,8 +4,8 @@ import akka.actor.ActorSystem
 import akka.http.scaladsl.Http
 import akka.http.scaladsl.model.MediaTypes.`text/html`
 import akka.http.scaladsl.model.StatusCodes._
-import akka.http.scaladsl.server.Directives.{_enhanceRouteWithConcatenation, as, complete, entity, get, getFromResource, path, post, redirect, _}
-import akka.http.scaladsl.server._
+import akka.http.scaladsl.server.Directives.{_enhanceRouteWithConcatenation, as, complete, entity, get, getFromResource, path, post, redirect}
+import akka.http.scaladsl.server.Route
 import de.heikoseeberger.akkahttpcirce.ErrorAccumulatingCirceSupport._
 import io.circe.Json
 import io.circe.optics.JsonPath.root
@@ -24,7 +24,6 @@ import scala.util.{Failure, Success}
 object Server extends App {
   implicit val system: ActorSystem = ActorSystem("sangria-playground-server")
   import system.dispatcher
-
   val route: Route =
     path("graphql") {
       get {
@@ -37,7 +36,6 @@ object Server extends App {
           val json = root.query.string.getOption(body)
           val operationName = root.operationName.string.getOption(body)
           val variables: Json = root.variables.json.getOption(body).getOrElse(Json.obj())
-
           json.map(QueryParser.parse(_)) match {
             case Some(Success(doc)) =>
               complete(m = Executor.execute(Article.schema, doc, new Container,
@@ -63,6 +61,5 @@ object Server extends App {
     path("") {
       redirect("/graphql", PermanentRedirect)
     }
-
   Http().newServerAt("0.0.0.0", 8080).bind(route)
 }

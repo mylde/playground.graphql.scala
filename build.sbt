@@ -12,8 +12,9 @@ libraryDependencies ++= Seq(
   "com.typesafe.akka" %% "akka-http" % "10.2.1",
   "de.heikoseeberger" %% "akka-http-circe" % "1.35.0",
   "io.circe" %% "circe-core" % "0.13.0",
-  "io.circe" %% "circe-parser" % "0.13.0",
-  "io.circe" %% "circe-optics" % "0.13.0"
+  "io.circe" %% "circe-generic" % "0.13.0",
+  "io.circe" %% "circe-optics" % "0.13.0",
+  "io.circe" %% "circe-parser" % "0.13.0"
 )
 
 mainClass in (Compile, run) := Some("playground.gql.Server")
