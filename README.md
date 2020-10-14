@@ -1,4 +1,4 @@
-# GraphQL Playground Scala
+# Playground GraphQL Scala
 
 ## Reference
 - sangria-graphql/sangria
